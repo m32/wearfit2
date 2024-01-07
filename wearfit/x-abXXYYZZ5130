@@ -1,0 +1,77 @@
+                if (com.wakeup.wearfit2.AppApplication.device_name.equals((Object)"GW66") && xdata[0] == 0xab && xdata[4] == 0x51 && xdata[5] == 0x30) {
+                    java.util.List a116 = null;
+                    android.util.Log.i(com.wakeup.wearfit2.AppApplication.TAG, "52 \u7761\u7720\u6570\u636e");
+                    com.wakeup.wearfit2.bean.SleepModel a117 = new com.wakeup.wearfit2.bean.SleepModel();
+                    int i95 = xdata[6] + 2000;
+                    int i96 = xdata[7];
+                    int i97 = xdata[8];
+                    int i98 = xdata[9];
+                    int i99 = xdata[10];
+                    int i100 = xdata[11];
+                    int i101 = xdata[12] * 16 * 16 + xdata[13];
+                    StringBuilder a118 = new StringBuilder();
+                    a118.append("");
+                    a118.append(i95);
+                    Object[] a119 = new Object[1];
+                    a119[0] = Integer.valueOf(i96);
+                    a118.append(String.format("%1$,02d", a119));
+                    Object[] a120 = new Object[1];
+                    a120[0] = Integer.valueOf(i97);
+                    a118.append(String.format("%1$,02d", a120));
+                    Object[] a121 = new Object[1];
+                    a121[0] = Integer.valueOf(i98);
+                    a118.append(String.format("%1$,02d", a121));
+                    Object[] a122 = new Object[1];
+                    a122[0] = Integer.valueOf(i99);
+                    a118.append(String.format("%1$,02d", a122));
+                    long j13 = com.wakeup.wearfit2.util.DateUtils.getMilliSecondFromTime(a118.toString());
+                    a117.setStartTimeInMillis(Long.valueOf(j13));
+                    long j14 = (long)(i101 * 60 * 1000) + j13;
+                    a117.setEntTimeInMillis(Long.valueOf(j14));
+                    a117.setYear(i95);
+                    a117.setMonth(i96);
+                    a117.setDay(i97);
+                    a117.setHour(i98);
+                    a117.setMinute(i99);
+                    a117.setSleep_id(i100);
+                    a117.setSleep_time((long)i101);
+                    a117.setBandAddress(com.wakeup.wearfit2.AppApplication.device_address);
+                    String s14 = com.wakeup.wearfit2.AppApplication.device_address;
+                    Object a123 = null;
+                    if (s14 == null) {
+                        a116 = (java.util.List)a123;
+                    } else {
+                        String[] a124 = new String[4];
+                        a124[0] = "entTimeInMillis = ? and bandAddress = ? and startTimeInMillis = ?";
+                        StringBuilder a125 = new StringBuilder();
+                        a125.append(j14);
+                        a125.append("");
+                        a124[1] = a125.toString();
+                        a124[2] = com.wakeup.wearfit2.AppApplication.device_address;
+                        StringBuilder a126 = new StringBuilder();
+                        a126.append(j13);
+                        a126.append("");
+                        a124[3] = a126.toString();
+                        a116 = org.litepal.LitePal.where(a124).find(com.wakeup.wearfit2.bean.SleepModel.class);
+                    }
+                    if (a116 != null && a116.size() > 0) {
+                        String s15 = com.wakeup.wearfit2.AppApplication.TAG;
+                        StringBuilder a127 = new StringBuilder();
+                        a127.append("sleepModel\u6570\u636e\u91cd\u590d");
+                        a127.append(((com.wakeup.wearfit2.bean.SleepModel)a116.get(0)).toString());
+                        android.util.Log.d(s15, a127.toString());
+                        return;
+                    }
+                    android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, "sleepModel\u6570\u636e\u4fdd\u5b58\u6210\u529f");
+                    if (a117.save()) {
+                        android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, "sleepModel\u6570\u636e\u4fdd\u5b58\u6210\u529f");
+                        String s16 = com.wakeup.wearfit2.AppApplication.TAG;
+                        StringBuilder a128 = new StringBuilder();
+                        a128.append("sleepModel::");
+                        a128.append(a117.toString());
+                        android.util.Log.d(s16, a128.toString());
+                        org.greenrobot.eventbus.EventBus.getDefault().post((Object)new com.wakeup.wearfit2.model.event.BaseEvent(com.wakeup.wearfit2.model.event.BaseEvent$EventType.SYNCING_DATA));
+                    } else {
+                        android.util.Log.e(com.wakeup.wearfit2.AppApplication.TAG, "sleepModel\u6570\u636e\u4fdd\u5b58\u5931\u8d25");
+                    }
+                }

@@ -1,0 +1,78 @@
+                int i17 = xdata[0];
+                label28: {
+                    label29: {
+                        {
+                            if (i17 != 0xab) {
+                                break label28;
+                            }
+                            if (xdata[4] != 0x51) {
+                                break label28;
+                            }
+                            if (xdata[5] == 0x16) {
+                                break label29;
+                            }
+                        }
+                        break label28;
+                    }
+                    android.util.Log.e("liu0916", "\u8fd0\u52a8\u6a21\u5f0f");
+                    int i18 = xdata[6];
+                    int i19 = xdata[7] + 2000;
+                    int i20 = xdata[8];
+                    int i21 = xdata[9];
+                    int i22 = xdata[10];
+                    int i23 = xdata[11];
+                    StringBuilder a19 = new StringBuilder();
+                    a19.append(i19);
+                    Object[] a20 = new Object[1];
+                    a20[0] = Integer.valueOf(i20);
+                    a19.append(String.format("%02d", a20));
+                    Object[] a21 = new Object[1];
+                    a21[0] = Integer.valueOf(i21);
+                    a19.append(String.format("%02d", a21));
+                    Object[] a22 = new Object[1];
+                    a22[0] = Integer.valueOf(i22);
+                    a19.append(String.format("%02d", a22));
+                    Object[] a23 = new Object[1];
+                    a23[0] = Integer.valueOf(i23);
+                    a19.append(String.format("%02d", a23));
+                    long j0 = com.wakeup.wearfit2.util.DateUtils.getMilliSecondFromTime(a19.toString());
+                    int i24 = xdata[12] * 16 * 16 + xdata[13];
+                    int i25 = xdata[14] * 16 * 16 + xdata[15];
+                    int i26 = xdata[16] * 16 * 16 + xdata[17];
+                    int i27 = xdata[18];
+                    com.wakeup.wearfit2.bean.BandSportModel a24 = new com.wakeup.wearfit2.bean.BandSportModel();
+                    a24.setSportType(i18);
+                    a24.setTimestamp(j0);
+                    a24.setSportDuration(i24);
+                    a24.setStep(i25);
+                    a24.setKcal(i26);
+                    a24.setHr(i27);
+                    a24.setUpToService("No");
+                    String[] a25 = new String[3];
+                    a25[0] = "sportType = ? and timestamp = ?";
+                    a25[1] = String.valueOf(i18);
+                    a25[2] = String.valueOf(j0);
+                    java.util.List a26 = org.litepal.LitePal.where(a25).find(com.wakeup.wearfit2.bean.BandSportModel.class);
+                    label27: {
+                        if (a26 == null) {
+                            break label27;
+                        }
+                        boolean b = a26.isEmpty();
+                        label26: {
+                            if (!b) {
+                                break label26;
+                            }
+                            break label27;
+                        }
+                        android.util.Log.e("liu0916", "bandSportModel\u91cd\u590d\u6570\u636e\uff0c\u4e0d\u9700\u8981\u4fdd\u5b58");
+                        break label28;
+                    }
+                    if (a24.save()) {
+                        StringBuilder a27 = new StringBuilder();
+                        a27.append("bandSportModel\u6570\u636e\u4fdd\u5b58\u6210\u529f: ");
+                        a27.append(new com.google.gson.Gson().toJson((Object)a24));
+                        android.util.Log.d("liu0916", a27.toString());
+                    } else {
+                        android.util.Log.e("liu0916", "bandSportModel\u6570\u636e\u4fdd\u5b58\u5931\u8d25");
+                    }
+                }

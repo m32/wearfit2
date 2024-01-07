@@ -1,0 +1,11 @@
+#!/bin/bash
+fname='wearfit-D56092D21DCE.sqlite3'
+if [ ! -f $fname ]; then
+    echo "Baza danych nie istnieje"
+else
+    sqlite3 $fname <<-EOF
+.output $fname.sql
+.dump
+.exit
+EOF
+fi

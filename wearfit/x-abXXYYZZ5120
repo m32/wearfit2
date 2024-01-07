@@ -1,0 +1,137 @@
+                int i4 = xdata[0];
+                label32: {
+                    com.wakeup.wearfit2.model.DBModel a14 = null;
+                    label30: {
+                        {
+                            int i5 = 0;
+                            label42: {
+                                {
+                                    if (i4 != 0xab) {
+                                        break label32;
+                                    }
+                                    if (xdata[4] != 0x51) {
+                                        break label32;
+                                    }
+                                    if (xdata[5] == 0x20) {
+                                        break label42;
+                                    }
+                                }
+                                break label32;
+                            }
+                            com.wakeup.wearfit2.AppApplication.isEcg = false;
+                            android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, "\u7b2c\u4e00\u4e2a\u5305");
+                            android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, a4.toString());
+                            a14 = new com.wakeup.wearfit2.model.DBModel();
+                            com.wakeup.wearfit2.AppApplication.dbModel = a14;
+                            int i6 = xdata[6] + 2000;
+                            int i7 = xdata[7];
+                            int i8 = xdata[8];
+                            int i9 = xdata[9];
+                            StringBuilder a15 = new StringBuilder();
+                            a15.append(i6);
+                            Object[] a16 = new Object[1];
+                            a16[0] = Integer.valueOf(i7);
+                            a15.append(String.format("%02d", a16));
+                            Object[] a17 = new Object[1];
+                            a17[0] = Integer.valueOf(i8);
+                            a15.append(String.format("%02d", a17));
+                            Object[] a18 = new Object[1];
+                            a18[0] = Integer.valueOf(i9);
+                            a15.append(String.format("%02d", a18));
+                            a15.append(0);
+                            long j = com.wakeup.wearfit2.util.DateUtils.getMilliSecondFromTime(a15.toString());
+                            int i10 = (xdata[10] << 16) + (xdata[11] << 8) + xdata[12];
+                            int i11 = (xdata[13] << 16) + (xdata[14] << 8) + xdata[15];
+                            int i12 = xdata[16];
+                            int i13 = xdata[17];
+                            int i14 = xdata[18];
+                            int i15 = xdata[19];
+                            label40: if (i12 == 0 && i13 == 0) {
+                                label41: {
+                                    if (i14 == 0) {
+                                        break label41;
+                                    }
+                                    if (i15 != 0) {
+                                        break label40;
+                                    }
+                                }
+                                return;
+                            }
+                            a14.setMacAddress(com.wakeup.wearfit2.AppApplication.device_address);
+                            a14.setTimeInMillis(j + 3600000L);
+                            a14.setStepCount(i10);
+                            a14.setCalory(i11);
+                            a14.setHeartRate(i12);
+                            a14.setBloodOxygen(i13);
+                            a14.setBloodPressure_high(i14);
+                            a14.setBloodPressure_low(i15);
+                            a14.setType(1);
+                            label36: {
+                                label39: {
+                                    if (i9 < 6) {
+                                        break label39;
+                                    }
+                                    if (i9 >= 11) {
+                                        break label39;
+                                    }
+                                    i5 = 5;
+                                    break label36;
+                                }
+                                label37: {
+                                    label38: {
+                                        if (i9 >= 11) {
+                                            break label38;
+                                        }
+                                        break label37;
+                                    }
+                                    if (i9 >= 18) {
+                                        break label37;
+                                    }
+                                    i5 = 10;
+                                    break label36;
+                                }
+                                label34: {
+                                    label35: {
+                                        if (i9 < 18) {
+                                            break label35;
+                                        }
+                                        if (i9 < 24) {
+                                            break label34;
+                                        }
+                                    }
+                                    i5 = 30;
+                                    break label36;
+                                }
+                                i5 = 20;
+                            }
+                            int i16 = i5 + (int)Math.sqrt((double)i10) / 2;
+                            a14.setTiredValue(i16);
+                            label33: {
+                                if (i16 >= 30) {
+                                    break label33;
+                                }
+                                a14.setTiredType(1);
+                                break label32;
+                            }
+                            label31: {
+                                if (i16 < 30) {
+                                    break label31;
+                                }
+                                if (i16 >= 60) {
+                                    break label31;
+                                }
+                                a14.setTiredType(2);
+                                break label32;
+                            }
+                            if (i16 < 60) {
+                                break label30;
+                            }
+                            if (i16 >= 80) {
+                                break label30;
+                            }
+                            a14.setTiredType(3);
+                        }
+                        break label32;
+                    }
+                    a14.setTiredType(4);
+                }

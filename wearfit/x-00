@@ -1,0 +1,159 @@
+                if (xdata[0] == 0) {
+                    if (com.wakeup.wearfit2.AppApplication.isEcg) {
+                        return;
+                    }
+                    android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, "\u7b2c\u4e8c\u4e2a\u5305");
+                    com.wakeup.wearfit2.model.DBModel a77 = com.wakeup.wearfit2.AppApplication.dbModel;
+                    if (a77 == null) {
+                        return;
+                    }
+                    if (len(xdata) > 5) {
+                        long j8 = (long)(xdata[1] * 60 * 60) * 1000L + (long)(xdata[2] * 60) * 1000L;
+                        long j9 = (long)(xdata[3] * 60 * 60) * 1000L + (long)(xdata[4] * 60) * 1000L;
+                        long j10 = j8 + j9;
+                        a77.setShallow_sleep_time(j8);
+                        a77.setDeep_sleep_time(j9);
+                        a77.setSleep_time(j10);
+                        a77.setWakeup_times(xdata[5]);
+                    }
+                    boolean b1 = com.wakeup.wearfit2.AppApplication.hasContinueHr;
+                    label22: {
+                        label21: {
+                            {
+                                if (b1) {
+                                    break label22;
+                                }
+                                if (com.wakeup.wearfit2.AppApplication.hasContinueHrD) {
+                                    break label22;
+                                }
+                                if (com.wakeup.wearfit2.AppApplication.hasContinueHrE) {
+                                    break label22;
+                                }
+                                if (!com.wakeup.wearfit2.AppApplication.hasContinueHrF) {
+                                    break label21;
+                                }
+                            }
+                            break label22;
+                        }
+                        int i73 = a77.getBloodPressure_high();
+                        label16: {
+                            label17: {
+                                {
+                                    label19: {
+                                        label20: {
+                                            if (i73 >= 90) {
+                                                break label20;
+                                            }
+                                            if (a77.getBloodPressure_high() != 0) {
+                                                break label19;
+                                            }
+                                        }
+                                        if (a77.getBloodPressure_high() > 140) {
+                                            break label19;
+                                        }
+                                        int i74 = a77.getBloodPressure_low();
+                                        label18: {
+                                            if (i74 >= 60) {
+                                                break label18;
+                                            }
+                                            if (a77.getBloodPressure_low() != 0) {
+                                                break label17;
+                                            }
+                                        }
+                                        if (a77.getBloodPressure_low() <= 90) {
+                                            break label16;
+                                        }
+                                        break label17;
+                                    }
+                                    com.wakeup.wearfit2.bean.ExceptionModel a78 = new com.wakeup.wearfit2.bean.ExceptionModel();
+                                    a78.setAsc(com.wakeup.wearfit2.AppApplication.device_address);
+                                    a78.setTimeInMillis(a77.getTimeInMillis());
+                                    a78.setValua(a77.getBloodPressure_high());
+                                    a78.setValua2(a77.getBloodPressure_low());
+                                    int i75 = a77.getBloodPressure_low();
+                                    label15: {
+                                        label13: {
+                                            label14: {
+                                                if (i75 < 60) {
+                                                    break label14;
+                                                }
+                                                if (a77.getBloodPressure_low() <= 90) {
+                                                    break label13;
+                                                }
+                                            }
+                                            a78.setType(6);
+                                            break label15;
+                                        }
+                                        a78.setType(4);
+                                    }
+                                    a78.save();
+                                }
+                                break label16;
+                            }
+                            com.wakeup.wearfit2.bean.ExceptionModel a79 = new com.wakeup.wearfit2.bean.ExceptionModel();
+                            a79.setAsc(com.wakeup.wearfit2.AppApplication.device_address);
+                            StringBuilder a80 = new StringBuilder();
+                            a80.append(a77.getBloodPressure_high());
+                            a80.append("");
+                            android.util.Log.i("wxk", a80.toString());
+                            a79.setTimeInMillis(a77.getTimeInMillis());
+                            a79.setValua(a77.getBloodPressure_high());
+                            a79.setValua2(a77.getBloodPressure_low());
+                            a79.setType(5);
+                            StringBuilder a81 = new StringBuilder();
+                            a81.append(a77.getBloodPressure_high());
+                            a81.append("");
+                            android.util.Log.i("wxk", a81.toString());
+                            if (a79.save()) {
+                                android.util.Log.i("wxk", "true");
+                            } else {
+                                android.util.Log.i("wxk", "false");
+                            }
+                        }
+                        if (a77.getHeartRate() < 60 && a77.getHeartRate() != 0) {
+                            com.wakeup.wearfit2.bean.ExceptionModel a82 = new com.wakeup.wearfit2.bean.ExceptionModel();
+                            a82.setAsc(com.wakeup.wearfit2.AppApplication.device_address);
+                            a82.setTimeInMillis(a77.getTimeInMillis());
+                            a82.setValua(a77.getHeartRate());
+                            a82.setType(2);
+                            a82.save();
+                        }
+                        if (a77.getHeartRate() > 100) {
+                            com.wakeup.wearfit2.bean.ExceptionModel a83 = new com.wakeup.wearfit2.bean.ExceptionModel();
+                            a83.setAsc(com.wakeup.wearfit2.AppApplication.device_address);
+                            a83.setTimeInMillis(a77.getTimeInMillis());
+                            a83.setValua(a77.getHeartRate());
+                            a83.setType(3);
+                            a83.save();
+                        }
+                        if (a77.getBloodOxygen() < 93 && a77.getBloodOxygen() != 0) {
+                            com.wakeup.wearfit2.bean.ExceptionModel a84 = new com.wakeup.wearfit2.bean.ExceptionModel();
+                            a84.setAsc(com.wakeup.wearfit2.AppApplication.device_address);
+                            a84.setTimeInMillis(a77.getTimeInMillis());
+                            a84.setValua(a77.getBloodOxygen());
+                            a84.setType(0);
+                            a84.save();
+                        }
+                        if (a77.getBloodOxygen() > 101) {
+                            com.wakeup.wearfit2.bean.ExceptionModel a85 = new com.wakeup.wearfit2.bean.ExceptionModel();
+                            a85.setAsc(com.wakeup.wearfit2.AppApplication.device_address);
+                            a85.setTimeInMillis(a77.getTimeInMillis());
+                            a85.setValua(a77.getBloodOxygen());
+                            a85.setType(1);
+                            a85.save();
+                        }
+                    }
+                    String[] a86 = new String[2];
+                    a86[0] = "timeInMillis=?";
+                    a86[1] = String.valueOf(a77.getTimeInMillis());
+                    if (a77.saveOrUpdate(a86)) {
+                        String s10 = com.wakeup.wearfit2.AppApplication.TAG;
+                        StringBuilder a87 = new StringBuilder();
+                        a87.append("\u6574\u70b9\u6570\u636e\u4fdd\u5b58\u6210\u529f\uff1a");
+                        a87.append(a77.toString());
+                        android.util.Log.d(s10, a87.toString());
+                        org.greenrobot.eventbus.EventBus.getDefault().post((Object)new com.wakeup.wearfit2.model.event.BaseEvent(com.wakeup.wearfit2.model.event.BaseEvent$EventType.SYNCING_DATA));
+                    } else {
+                        android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, "\u6574\u70b9\u6570\u636e\u4fdd\u5b58\u5931\u8d25");
+                    }
+                }

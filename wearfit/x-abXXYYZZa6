@@ -1,0 +1,27 @@
+                if (((Integer)a6.get(0)).intValue() != 0xab) {
+                    a4 = a6;
+                } else if (((Integer)a6.get(4)).intValue() != 0xa6) {
+                    a4 = a6;
+                } else {
+                    String[] a7 = s3.split("\\s+");
+                    StringBuilder a8 = new StringBuilder();
+                    int i2 = a7.length - 1;
+                    a4 = a6;
+                    for(; i2 >= 0; i2 = i2 + -1) {
+                        if (i2 > 7) {
+                            a8.append(a7[i2].toUpperCase());
+                            if (i2 != 8) {
+                                a8.append(":");
+                            }
+                        }
+                    }
+                    String s4 = a8.toString();
+                    String s5 = com.wakeup.wearfit2.AppApplication.TAG;
+                    StringBuilder a9 = new StringBuilder();
+                    a9.append("\u7ecf\u5178\u84dd\u7259mac\u5730\u5740: ");
+                    a9.append(s4);
+                    android.util.Log.i(s5, a9.toString());
+                    com.wakeup.wearfit2.util.SPUtils.putString(this.this$0.getApplicationContext(), "classic_mac_address", s4);
+                    android.content.Intent a10 = new android.content.Intent("connect_classic_bluetooth");
+                    this.this$0.sendBroadcast(a10);
+                }

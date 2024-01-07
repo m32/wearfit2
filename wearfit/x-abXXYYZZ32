@@ -1,0 +1,91 @@
+                if (xdata[0] == 0xab && xdata[4] == 0x32) {
+                    int i83 = 0;
+                    int i84 = 0;
+                    com.wakeup.wearfit2.model.DBModel a99 = new com.wakeup.wearfit2.model.DBModel();
+                    a99.setMacAddress(com.wakeup.wearfit2.AppApplication.device_address);
+                    a99.setHeartRate(xdata[6]);
+                    a99.setBloodOxygen(xdata[7]);
+                    a99.setBloodPressure_high(xdata[8]);
+                    a99.setBloodPressure_low(xdata[9]);
+                    int i85 = com.wakeup.wearfit2.util.DateUtils.getHourFromLong(System.currentTimeMillis());
+                    com.wakeup.wearfit2.model.StepAndSleepModel a100 = (com.wakeup.wearfit2.model.StepAndSleepModel)org.litepal.LitePal.findFirst(com.wakeup.wearfit2.model.StepAndSleepModel.class);
+                    int i86 = (a100 == null) ? 0 : a100.getStepCount();
+                    label6: {
+                        label8: {
+                            if (i85 < 6) {
+                                break label8;
+                            }
+                            if (i85 >= 11) {
+                                break label8;
+                            }
+                            i83 = 1;
+                            break label6;
+                        }
+                        label7: {
+                            if (i85 < 11) {
+                                break label7;
+                            }
+                            if (i85 >= 18) {
+                                break label7;
+                            }
+                            i83 = 10;
+                            break label6;
+                        }
+                        label4: {
+                            label5: {
+                                if (i85 < 18) {
+                                    break label5;
+                                }
+                                if (i85 < 24) {
+                                    break label4;
+                                }
+                            }
+                            i83 = 30;
+                            break label6;
+                        }
+                        i83 = 20;
+                    }
+                    int i87 = i83 + (int)Math.sqrt((double)i86) / 2;
+                    label2: if (i87 >= 30) {
+                        label3: {
+                            if (i87 < 30) {
+                                break label3;
+                            }
+                            if (i87 >= 60) {
+                                break label3;
+                            }
+                            i84 = 2;
+                            break label2;
+                        }
+                        label0: {
+                            label1: {
+                                if (i87 < 60) {
+                                    break label1;
+                                }
+                                if (i87 < 80) {
+                                    break label0;
+                                }
+                            }
+                            i84 = 4;
+                            break label2;
+                        }
+                        i84 = 3;
+                    } else {
+                        i84 = 1;
+                    }
+                    a99.setTiredValue(i87);
+                    a99.setTiredType(i84);
+                    a99.setTimeInMillis(com.wakeup.wearfit2.util.DateSupport.String2Data(com.wakeup.wearfit2.util.DateSupport.toString(System.currentTimeMillis(), "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm").getTime());
+                    a99.setType(0);
+                    String[] a101 = new String[2];
+                    a101[0] = "timeInMillis=?";
+                    a101[1] = String.valueOf(a99.getTimeInMillis());
+                    if (a99.saveOrUpdate(a101)) {
+                        com.wakeup.wearfit2.model.event.BaseEvent a102 = new com.wakeup.wearfit2.model.event.BaseEvent(com.wakeup.wearfit2.model.event.BaseEvent$EventType.ONE_KEY_MEASURE);
+                        a102.setmObject((Object)a99);
+                        org.greenrobot.eventbus.EventBus.getDefault().post((Object)a102);
+                        android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, "save success");
+                    } else {
+                        android.util.Log.d(com.wakeup.wearfit2.AppApplication.TAG, "save failed");
+                    }
+                }

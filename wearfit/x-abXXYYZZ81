@@ -1,0 +1,11 @@
+                if (xdata[0] == 0xab && xdata[4] == 0x81 && xdata[5] == 0x01) {
+                    String s17 = com.wakeup.wearfit2.AppApplication.TAG;
+                    StringBuilder a129 = new StringBuilder();
+                    a129.append("\u6302\u65ad\u7535\u8bdd PHONE_STATE:");
+                    a129.append(com.wakeup.wearfit2.AppApplication.PHONE_STATE);
+                    android.util.Log.i(s17, a129.toString());
+                    if (com.wakeup.wearfit2.AppApplication.PHONE_STATE == 1) {
+                        com.wakeup.wearfit2.AppApplication.access$600(this.this$0);
+                        com.wakeup.wearfit2.AppApplication.access$700(this.this$0).setHangUpPhone();
+                    }
+                }

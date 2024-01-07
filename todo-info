@@ -1,0 +1,64 @@
+Specifications:
+
+Main control platform: hs6620
+SOC main frequency and memory: 1MB ROM + ram extended SPI 4MB and multilingual character library
+Screen IPS true color screen: 1.6inch; resolution: 240x240px
+Acceleration sensor: sc7a20
+Battery: built in lithium battery 200mA
+Touch key: full screen touch
+Charging mode: magnetic suction
+Vibration: support
+Heart rate module: Tianyi core 3366 infrared green dual-mode sensor / heart rate detection + blood pressure detection
+Bluetooth: Bluetooth 4.0 ble protocol
+Screen material: nano toughened glass
+Shell material: plastic
+Strap material: silica nano coating
+Wear specification: Standard 20mm
+APP: WEARFIT2.0
+
+https://play.google.com/store/apps/details?id=com.wakeup.smartband
+
+https://rbaron.net/blog/2021/07/06/Reverse-engineering-the-M6-smart-fitness-band.html
+http://wiki.telink-semi.cn/wiki/chip-series/TLSR823x-Series/
+https://github.com/rbaron/m6-reveng/tree/main/example-programs/ble-b-parasite-tracker
+http://wiki.telink-semi.cn/doc/ds/DS_TLSR8232-E_Datasheet%20for%20Telink%20BLE%20SoC%20TLSR8232.pdf
+
+A Telink TLSR8232 system-on-a-chip (SoC)
+A 0.96” (160x80 px) color display
+A tiny ~100 mAh LiPo battery and USB charging circuit
+A vibration motor
+A (most likely) fake heart rate sensor
+
+The SoC in the M6 is a Telink TLSR8232 (datasheet). Some specs:
+
+32-bit CPU
+Closed architecture (usually referred to as tc32, similar to ARM9) - not a lot of resources about it
+24 MHz clock speed
+16kB of SRAM
+512kB of internal flash
+32kHz onboard oscillator for low power mode
+SWS (Single Wire Slave) interface for debugging and programming
+Integrated Bluetooth Low Energy (BLE) transceiver
+Low power operation (alleged ~2 uA in deep sleep)
+
+[D5:60:92:D2:1D:CE] Connected
+[D5:60:92:D2:1D:CE] Resolved services
+[Service] 0000fee7-0000-1000-8000-00805f9b34fb (Handle: 46): Tencent Holdings Limited
+  [Characteristic] 0000fea2-0000-1000-8000-00805f9b34fb (Handle: 53): Intrepid Control Systems: Inc.
+    (read,write,indicate), Value: bytearray(b'\xc0')
+    [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 55): Client Characteristic Configuration, Value: bytearray(b'\x00\x00')
+  [Characteristic] 0000fea1-0000-1000-8000-00805f9b34fb (Handle: 50): Intrepid Control Systems: Inc.
+    (read,indicate), Value: bytearray(b'\x07\xd7\x19\x00\xd6\x19\x00\xd7\x19\x00')
+    [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 52): Client Characteristic Configuration, Value: bytearray(b'\x00\x00')
+  [Characteristic] 0000fec9-0000-1000-8000-00805f9b34fb (Handle: 47): Apple: Inc.
+    (read,notify), Value: bytearray(b'\xd5`\x92\xd2\x1d\xce')
+    [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 49): Client Characteristic Configuration, Value: bytearray(b'\x00\x00')
+[Service] 00001801-0000-1000-8000-00805f9b34fb (Handle: 1): Generic Attribute Profile
+  [Characteristic] 00002a05-0000-1000-8000-00805f9b34fb (Handle: 2): Service Changed
+    (broadcast,read,write,notify,indicate,authenticated-signed-writes), Value: bytearray(b'\x00\x00\x00\x00')
+    [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 4): Client Characteristic Configuration, Value: bytearray(b'\x01\x00')
+[Service] 6e400001-b5a3-f393-e0a9-e50e24dcca9e (Handle: 16): Nordic UART Service
+  [Characteristic] 6e400003-b5a3-f393-e0a9-e50e24dcca9e (Handle: 17): Nordic UART TX (notify)
+    [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 19): Client Characteristic Configuration, Value: bytearray(b'\x00\x00')
+  [Characteristic] 6e400002-b5a3-f393-e0a9-e50e24dcca9e (Handle: 20): Nordic UART RX
+    (write-without-response,write)

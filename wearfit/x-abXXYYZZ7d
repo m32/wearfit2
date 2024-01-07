@@ -1,0 +1,10 @@
+                if (xdata[0] == 0xab && xdata[4] == 0x7d) {
+                    if (xdata[6] != 0) {
+                        if (xdata[6] == 1 && com.wakeup.wearfit2.AppApplication.access$400(this.this$0) == null) {
+                            com.wakeup.wearfit2.AppApplication.access$500(this.this$0);
+                            com.wakeup.wearfit2.AppApplication.access$300(this.this$0).sendEmptyMessageDelayed(2, 60000L);
+                        }
+                    } else {
+                        com.wakeup.wearfit2.AppApplication.access$100(this.this$0);
+                    }
+                }

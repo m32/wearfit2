@@ -1,0 +1,17 @@
+                if (xdata[0] == 0xab && xdata[4] == 0x97) {
+                    int i102 = xdata[6] + 2000;
+                    int i103 = xdata[7];
+                    int i104 = xdata[8];
+                    int i105 = xdata[9];
+                    String s18 = com.wakeup.wearfit2.AppApplication.TAG;
+                    StringBuilder a130 = new StringBuilder();
+                    a130.append("year: ");
+                    a130.append(i102);
+                    a130.append("month: ");
+                    a130.append(i103);
+                    a130.append("day: ");
+                    a130.append(i104);
+                    a130.append("min ");
+                    a130.append(i105);
+                    android.util.Log.i(s18, a130.toString());
+                }

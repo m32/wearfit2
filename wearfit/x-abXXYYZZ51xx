@@ -1,0 +1,50 @@
+                label23: if (xdata[0] == 0xab && xdata[4] == 0x51) {
+                    if (xdata[5] != 0x11) {
+                        if (xdata[5] != 0x12) {
+                            if (xdata[5] != 0x14) {
+                                if (xdata[5] != 0x13) {
+                                    if (xdata[5] != 0x18) {
+                                        if (xdata[5] == 0x21) {
+                                        }
+                                    } else {
+                                        int i35 = xdata[6] + 2000;
+                                        int i36 = xdata[7];
+                                        int i37 = xdata[8];
+                                        int i38 = xdata[9];
+                                        int i39 = xdata[10];
+                                        StringBuilder a36 = new StringBuilder();
+                                        a36.append(i35);
+                                        Object[] a37 = new Object[1];
+                                        a37[0] = Integer.valueOf(i36);
+                                        a36.append(String.format("%02d", a37));
+                                        Object[] a38 = new Object[1];
+                                        a38[0] = Integer.valueOf(i37);
+                                        a36.append(String.format("%02d", a38));
+                                        Object[] a39 = new Object[1];
+                                        a39[0] = Integer.valueOf(i38);
+                                        a36.append(String.format("%02d", a39));
+                                        Object[] a40 = new Object[1];
+                                        a40[0] = Integer.valueOf(i39);
+                                        a36.append(String.format("%02d", a40));
+                                        long j2 = com.wakeup.wearfit2.util.DateUtils.getMilliSecondFromTime(a36.toString());
+                                        int i40 = xdata[11];
+                                        if (i40 != 0) {
+                                            com.wakeup.wearfit2.bean.MianyiBean a41 = new com.wakeup.wearfit2.bean.MianyiBean((float)i40, j2);
+                                            String[] a42 = new String[2];
+                                            a42[0] = "timeInMillis=?";
+                                            a42[1] = String.valueOf(a41.getTimeInMillis());
+                                            a41.saveOrUpdate(a42);
+                                        }
+                                    }
+                                } else {
+                                }
+                            } else {
+0x14
+                            }
+                        } else {
+0x12
+                        }
+                    } else {
+0x11
+                    }
+                }
