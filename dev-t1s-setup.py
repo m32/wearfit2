@@ -25,6 +25,7 @@ def vnotification_handler(sender, data):
 async def main():
     async with BleakClient(ADDRESS) as client:
         async def one(cmdname, cmd, timeout=2.0):
+            print('cmd: {}'.format(cmdname))
             state.cmdname = cmdname
             state.responses = 0
             #bdata = ' '.join(['%02x'%x for x in cmd])
@@ -33,6 +34,7 @@ async def main():
             state.time = time.time()
             while time.time() - state.time < timeout:
                 await asyncio.sleep(0.5)
+            print('cmd: {} resp:{}'.format(cmdname, state.responses))
 
         client._mtu_size = 500
         if 0:
@@ -52,21 +54,27 @@ async def main():
             cmd = cmds.setTime(sync.year, sync.month, sync.day, sync.hour, sync.minute, sync.second)
             await one('setTime', cmd)
 
+        if 0:
             cmd = cmds.setBandLanguage(1)
             await one('setBandLanguage', cmd)
 
-            cmd = cmds.setUserInfo(1, 70, 57, 183, 83, 8000, 1, 1)
+        if 1:
+            cmd = cmds.setUserInfo(1, 70, 57, 183, 83, 8000, 1, 0)
             await one('setUserInfo', cmd)
 
+        if 0:
             cmd = cmds.set12HourSystem(0)
             await one('set12HourSystem', cmd)
 
+        if 0:
             cmd = cmds.setOnTimeMeasure(1)
             await one('setOnTimeMeasure', cmd)
 
+        if 0:
             cmd = cmds.setSleepTimeRange(1, 23, 0, 9, 0)
             await one('setSleepTimeRange', cmd)
 
+        if 0:
             cmd = cmds.setFace(0)
             await one('setFace', cmd)
 

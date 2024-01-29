@@ -12,13 +12,15 @@ def parse(state, data):
     i53 = data[11]
     i54 = data[12]
     if i53 != 0 and i54 != 0:
-        rec = model.Measure(
-            synced = state.sync,
-            line = state.line,
-            when = datetime.datetime(i48, i49, i50, i51, i52),
-            BloodPressure_high = i53,
-            BloodPressure_low = i54,
-            Type = 0,
-        )
-        state.session.add(rec)
+        when = datetime.datetime(i48, i49, i50, i51, i52)
+        if when > state.lastsync:
+            rec = model.Measure(
+                synced = state.sync,
+                line = state.line,
+                when = when,
+                BloodPressure_high = i53,
+                BloodPressure_low = i54,
+                Type = 0,
+            )
+            state.session.add(rec)
     return True

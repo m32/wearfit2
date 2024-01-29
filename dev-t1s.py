@@ -37,6 +37,7 @@ def vnotification_handler(sender, data):
 
 
 async def main():
+    print('last sync:', state.lastsync)
     device = await BleakScanner.find_device_by_address(
         ADDRESS, cb=dict(use_bdaddr=True)
     )
@@ -89,6 +90,7 @@ async def main():
             state.time = time.time()
             while time.time() - state.time < timeout:
                 await asyncio.sleep(0.5)
+            print('cmd: {} resp:{}'.format(cmdname, state.responses))
 
         client._mtu_size = 500
         if 0:

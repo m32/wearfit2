@@ -9,12 +9,14 @@ def parse(state, data):
     i59 = data[10]
     i60 = data[11]
     if i60 != 0:
-        rec = model.Measure(
-            synced = state.sync,
-            line = state.line,
-            when = datetime.datetime(i55, i56, i57, i58, i59),
-            BloodOxygen = i60,
-            Type = 0
-        )
-        state.session.add(rec)
+        when = datetime.datetime(i55, i56, i57, i58, i59)
+        if when > state.lastsync:
+            rec = model.Measure(
+                synced = state.sync,
+                line = state.line,
+                when = when,
+                BloodOxygen = i60,
+                Type = 0
+            )
+            state.session.add(rec)
     return True

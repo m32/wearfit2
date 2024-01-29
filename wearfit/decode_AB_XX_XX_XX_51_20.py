@@ -12,23 +12,25 @@ def parse(state, data):
     i13 = data[17]
     i14 = data[18]
     i15 = data[19]
-    rec = model.Measure(
-        synced = state.sync,
-        line = state.line,
-        when = datetime.datetime(i6, i7, i8, i9, 0),
-        Mianyi = i9,
-        StepCount = i10,
-        Calory = i11,
-        HeartRate = i12,
-        BloodOxygen = i13,
-        BloodPressure_high = i14,
-        BloodPressure_low = i15,
-    )
-    if state.syncdata is not None:
-        rec.setShallow_sleep_time = state.syncdata.setShallow_sleep_time
-        rec.setDeep_sleep_time = state.syncdata.setDeep_sleep_time
-        rec.setSleep_time = state.syncdata.setSleep_time
-        rec.setWakeup_times = state.syncdata.setWakeup_times
-        state.syncdata = None
-    state.session.add(rec)
+    when = datetime.datetime(i6, i7, i8, i9, 0)
+    if when > state.lastsync:
+        rec = model.Measure(
+            synced = state.sync,
+            line = state.line,
+            when = when,
+            Mianyi = i9,
+            StepCount = i10,
+            Calory = i11,
+            HeartRate = i12,
+            BloodOxygen = i13,
+            BloodPressure_high = i14,
+            BloodPressure_low = i15,
+        )
+        if state.syncdata is not None:
+            rec.setShallow_sleep_time = state.syncdata.setShallow_sleep_time
+            rec.setDeep_sleep_time = state.syncdata.setDeep_sleep_time
+            rec.setSleep_time = state.syncdata.setSleep_time
+            rec.setWakeup_times = state.syncdata.setWakeup_times
+            state.syncdata = None
+        state.session.add(rec)
     return True

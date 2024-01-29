@@ -11,11 +11,13 @@ def parse(state, data):
     i46 = data[11]
     i47 = data[12]
     if i46 != 0 and i45 != 0:
-        rec = model.Measure(
-            synced = state.sync,
-            line = state.line,
-            when = datetime.datetime(i41, i42, i43, i44, i45),
-            BodyTemp = decimal.Decimal(i46 + i47/10.0).quantize(decimal.Decimal('.01'), rounding=decimal.ROUND_DOWN)
-        )
-        state.session.add(rec)
+        when = datetime.datetime(i41, i42, i43, i44, i45)
+        if when > state.lastsync:
+            rec = model.Measure(
+                synced = state.sync,
+                line = state.line,
+                when = when,
+                BodyTemp = decimal.Decimal(i46 + i47/10.0).quantize(decimal.Decimal('.01'), rounding=decimal.ROUND_DOWN)
+            )
+            state.session.add(rec)
     return True

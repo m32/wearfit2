@@ -9,12 +9,14 @@ def parse(state, data):
     i92 = data[10]
     i93 = data[11]
     i94 = (data[12] << 8) + data[13]
-    rec = model.Measure(
-        synced = state.sync,
-        line = state.line,
-        when = datetime.datetime(i88, i89, i90, i91, i92),
-        Sleep_id = i93,
-        Sleep_time = i94,
-    )
-    state.session.add(rec)
+    when = datetime.datetime(i88, i89, i90, i91, i92)
+    if when > state.lastsync:
+        rec = model.Measure(
+            synced = state.sync,
+            line = state.line,
+            when = when,
+            Sleep_id = i93,
+            Sleep_time = i94,
+        )
+        state.session.add(rec)
     return True
